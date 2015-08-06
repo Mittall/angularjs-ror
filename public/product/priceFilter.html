@@ -1,0 +1,42 @@
+<div data-extend-template="/layouts/layout.html">
+  <div data-block="content">
+    <section class="list">
+      <div class="container"> 
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <!--<div class="text-center info-mesage" ng-show="product">  
+            </div>-->
+            <div ng-controller="ProductCtrl" ng-init="getproductsFilter()">
+              <div>
+                <div class="top">
+                  <b>Search:</b> <input name="product" type="text" class="search-input" ng-model="query"/>
+                </div>
+                <section class="left" style="border-right:1px">  
+                  <div class="filter"><br/>
+                    <b>Product price</b><br/>
+                    <div>
+                      <div ng-repeat="price in priceGroup">
+                        <input type="checkbox" ng-model="productPrice[price]"/>{{price}}
+                        <span>({{(filteredProducts | filter:query | filter:count('price', price)).length }})</span>
+                      </div>
+                    </div>
+                  </div>
+                </section> <br/>       
+                <section class="right" style="border-right:1px">
+                  <div>
+                    <ul>
+                      <li ng-repeat="product in filteredProducts | filter:query" >
+                        <p><b>Player Name:</b> {{product.pname}}</p>
+                        <p><b>Player Price:</b> {{product.price}}</p>
+                      </li>
+                    </ul>    
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

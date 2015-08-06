@@ -1,0 +1,78 @@
+<div id="includedContent">
+<div data-extend-template="/layouts/layout.html">
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show=""></div>
+            <div ng-hide="">
+              <form novalidate role="form" name="productListForm" ng-submit="create()" class="form-horizontal">
+                <fieldset>
+                  <date-picker></date-picker>
+                  <div clas="form-group">
+                    <labek for="inputproduct" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Create Product</h2>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/><br/>
+                  <!--<ng-include src="'/categories/create.html'"></ng-include>-->
+
+                  <div class="form-group">
+                    <label for="inputproduct" class="col-lg-2 control-label">Category name: </label>
+                    <div class="col-lg-6">
+                      <select ng-init="getCategories()" ng-options="c.id as c.cname for c in categories" ng-model='productModel.selected'></select>
+                      <div class="error">{{productError}}</div>
+                    </div>
+                  </div>
+                  selected Category : {{productModel.selected}}
+                  <div class="form-group">
+                    <label for="inputproduct" class="col-lg-2 control-label">Product name: </label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" name="productName" ng-model="productModel.pName" id="productName" placeholder="Product Name" ng-pattern="/^[a-zA-Z]/" auto-focus />
+                      <div class="error">{{productError}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputproduct" class="col-lg-2 control-label">Product price: </label>
+                    <div class="col-lg-6">
+                      <input type="number" class="form-control" name="productPrice" ng-model="productModel.pPrice" id="productPrice" placeholder="Product Price" required />
+                      <span class="error" ng-show="productListForm.pPrice.$error.required">Required!</span>
+                      <div class="error">{{productError}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputproduct" class="col-lg-2 control-label">Product launch date: </label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" name="" datepicker ng-model="productModel.launch" id="" placeholder="" />
+                      <div class="error">{{productError}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputproduct" class="col-lg-2 control-label">Image : </label>
+                    <div class="col-lg-6">
+                      <!--<input type="file" id="fileUpload" ng-model="imageInfo.image" />-->
+                      <input name="image" ng-model="productModel.image" type="file" id="imageInfo" onchange="angular.element(this).scope().setfiles(this)">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-6 col-lg-offset-2">
+                      <input type="submit" class="btn btn-primary" ng-disabled="productListForm.$invalid" value="Create" />
+                    </div>
+                  </div>
+
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

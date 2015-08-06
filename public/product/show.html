@@ -1,0 +1,48 @@
+<div data-extend-template="/layouts/layout.html">
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show="">
+            </div>
+            <div ng-hide="">
+              <form novalidate role="form" name="productListForm" class="form-horizontal" ng-submit="buy_product()">
+                <fieldset>
+                  <div clas="form-group">
+                    <labek for="inputproduct" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Products</h2>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/>
+                  <div ng-controller="ProductCtrl" ng-init="getDataById(product.id)">
+                    <p>
+                      <strong>Product</strong> : {{product.id}}
+                    </p>
+
+                    <p>
+                      <strong>Name</strong> : {{product.pname}}
+                    </p>
+
+                    <p>
+                      <strong>Price</strong> : {{product.price}}
+                    </p>
+                    <a href="#/productUpdate/{{product.id}}" data-ng-click="updateProduct()">Update</a> |
+                    <a href="#/products">Back</a>
+                  </div>
+                </fieldset>
+                <!-- -->
+                <div>
+                  <b>To buy a product add Your needed quntity and buy product from here,</b>
+                  <input type="text" ng-model="shoppingModel.quntity" placeholder="Quntity" require="">
+                  <input type="submit" value="Buy" ng-disable="productListForm">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

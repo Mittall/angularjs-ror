@@ -1,0 +1,221 @@
+<div data-extend-template="/layouts/layout.html"> 
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show="product">
+            </div>
+            <div ng-hide="product">
+              <form novalidate role="form" name="productListForm" class="form-horizontal" ng-init="searchProducts()">
+                <fieldset>
+                  <div clas="form-group">
+                    <label for="inputproduct" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Products</h2>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/>
+                  <div ng-controller="ProductCtrl">
+                    <!-- Search box -->
+                    <label for="inputproduct" class="col-2 control-label">Search Product Name: </label>
+                    <div class="bar">
+		                  <input type="text" ng-model="searchString" placeholder="Enter your search terms" />
+	                  </div>
+                    <br/>               
+                    <!-- Display the products -->
+                    <table>
+                    <tr>
+                      <td><b><a href="" ng-click="predicate = 'pname'; reverse=!reverse">Product Name | </a></b></td>
+                      <td><b><a href="" ng-click="predicate = 'price'; reverse=!reverse">Product Price </a></b></td>
+                    </tr>
+                    <tr data-ng-repeat="p in searchResult | searchFor:searchString | pagination: curPage * pageSize | limitTo: pageSize | orderBy:predicate:reverse">
+                      <td>{{p.pname}}</td>
+                      <td>{{p.price}}</td>
+                      <td >
+                        <a href="#/productUpdate/{{p.id}}" data-ng-click="updateProduct()">Update</a> | 
+                        <a href="" confirmed-click="deleteProduct(p.id)" ng-confirm-click="Are you sure?">Delete</a> | 
+                        <a href="#/productShow/{{p.id}}" data-ng-click="getDataById(p.id)">Show</a>
+                      </td>
+                    </tr>
+
+                    <!--<div class="" ng-show="searchResult.length">
+                      <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; PREV </button>
+                      <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                      <button type="button" class="btn btn-primary" ng-disabled="curPage >= searchResult.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+                    </div><br/>-->
+                    <div class="well">
+                      <button ng-disabled="curPage == 0" ng-click="curPage=0">First</button>
+                      <button ng-disabled="curPage == 0" ng-click="curPage=curPage-1">Previous</button>
+                      <span ng-bind="curPage+1">1</span>/<span ng-bind="numberOfPages()">Loading..</span>
+                      <button ng-disabled="curPage >= searchResult.length/pageSize - 1" ng-click="curPage=curPage+1">Next</button>
+                      <button ng-disabled="curPage >= searchResult.length/pageSize - 1" ng-click="curPage=numberOfPages()-1">Last</button>
+                    </div>
+
+                    </table><br/>  
+                    <!--<a href="#/product" data-ng-click="create()">Add new Product</a>-->
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div ng-controller="ProductCtrl">
+  <form name="personForm" novalidate>
+    <label for="firstNameEdit">First name:</label>
+    <input id="firstNameEdit" type="text" name="firstName" ng-model="person.firstName" required /><br />
+    <label for="lastNameEdit">Last name:</label>
+    <input id="lastNameEdit" type="text" name="lastName" ng-model="person.lastName" required /><br />
+    <br />
+    <button type="button" ng-click="resetForm()" ng-disabled="!isPersonChanged()">Reset</button>
+  </form>
+</div>
+
+<!-- Modal box for create -->
+<a href="javascript:void(0)" modal-name="#myModal" open-dialog>Add new Product</a>
+<div class="modal fade" id="myModal" data-backdrop="static">
+  <div>
+    <form novalidate role="form" name="productList" ng-submit="create()" class="form-horizontal">
+      <fieldset>
+        <date-picker></date-picker>
+        <div clas="form-group">
+          <labek for="inputproduct" class=""></label>
+          <div class="col-lg-6">
+            <h2>Create Product</h2><br/> 
+          </div> 
+          <div class="" data-dismiss="modal" ng-animate=""><img src="/assets/popupClose.png"></div>
+        </div>
+        <div class="alert alert-notice" id="msg">Successfully Created.</div>
+        <br/><br/><br/><br/><br/>
+
+        <div class="form-group">
+          <label for="inputproduct" class="col-lg-2 control-label">Product name: </label>
+          <div class="col-lg-6">
+            <input type="text" class="form-control" name="productName" ng-model="productModel.pName" id="productName" placeholder="Product Name" ng-pattern="/^[a-zA-Z]/" auto-focus required />
+            <div class="error">{{productError}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputproduct" class="col-lg-2 control-label">Product price: </label>
+          <div class="col-lg-6">
+            <input type="number" class="form-control" name="productPrice" ng-model="productModel.pPrice" id="productPrice" placeholder="Product Price" required />
+            <span class="error" ng-show="productListForm.pPrice.$error.required">Required!</span>
+            <div class="error">{{productError}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputproduct" class="col-lg-2 control-label">Product launch date: </label>
+          <div class="col-lg-6">
+            <input type="text" class="form-control" name="launchDate" ng-model="productModel.launch" id="launchDate" ng-pattern="/^\d{1,2}\/\d{1,2}\/\d{4}$/" datepicker placeholder="Launch Date" required />
+            <div class="error">{{productError}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-6 col-lg-offset-2">
+            <input id="submit" type="submit" class="btn btn-primary" ng-disabled="productList.$invalid" value="Create"/>
+          </div>
+        </div>
+      </fieldset>
+     </form>
+   <br/>
+  </div>
+</div><!-- modal box div end -->
+
+<!-- Pagination -->
+<body>
+  <script type="text/ng-template" id="index.html">
+    <div class="pagination text-center" ng-show="paginator.pageCount() > 1">
+      <ul>
+        <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+          <a><i class="icon-fast-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i></a>
+        </li>
+        <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+          <a><i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i></a>
+        </li>
+        <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:paginator.lowerLimit():paginator.pageCount() | limitTo : paginator.limitPerPage" ng-class="paginator.page==i && 'active'"> 
+          <a> <i>{{i+1}}</i> </a> 
+        </li>
+        <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
+          <a><i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i></a>
+        </li>
+        <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
+          <a><i class="icon-fast-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i></a>
+        </li>
+      </ul>
+    </div>
+  </script>
+  <div class="container" ng-controller="ProductCtrl" ng-init="searchProducts()">
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th><a href="" ng-click="predicate = 'id'; reverse=!reverse">Id</th>
+          <th><a href="" ng-click="predicate = 'pname'; reverse=!reverse">Name</a></th>
+          <th><a href="" ng-click="predicate = 'price'; reverse=!reverse">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="p in dataval | paginate:rowsPerPage | orderBy:predicate:reverse">
+          <td>{{p.id}}</td>
+          <td>{{p.pname}}</td>
+          <td>{{p.price}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
+    <paginator></paginator>
+  </div>
+  <style>
+    @import url('http://getbootstrap.com/2.3.2/assets/css/bootstrap.css');
+  </style>
+</body>
+
+<script>
+  $(document).ready(function() {
+    $("#msg").hide();
+    $("#submit").click(function() {
+      $("#msg").show();
+    });
+  });
+</script>
+
+<!-- Code for animation using ng-animate -->
+<div class="well" style="margin-top: 30px; width: 200px; overflow: hidden;"> <!-- animation div start -->
+  <div class="input-append">
+    <input type="text" ng-model="search" class="search-query" style="width: 80px">
+    <button type="submit" class="btn">Search</button>
+  </div>
+  <ul class="phones">
+    <li ng-animate="'animate'" data-ng-repeat="p in searchResult | filter:search | orderBy:predicate:reverse" class="thumbnail phone-listing">
+      <a href="#" class="thumb"> {{p.pname}} </a>
+    </li> 
+  </ul>
+</div> <!-- animation div end -->
+
+
+<!--Simple form of animaton -->
+
+<!--
+<div ng-init="checked=true">
+  <label>
+    <input type="checkbox" ng-model="checked" style="float:left; margin-right:10px;"> Is Visible...
+  </label>
+  <div class="check-element sample-show-hide" ng-show="checked" style="clear:both;">
+    Visible...
+  </div>
+</div>
+
+<p>
+  <input type="button" value="set" ng-click="myCssVar='css-class'">
+  <input type="button" value="clear" ng-click="myCssVar=''">
+  <br>
+  <span ng-class="myCssVar">CSS-Animated Text</span>
+</p>-->

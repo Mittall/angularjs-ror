@@ -1,0 +1,46 @@
+<div data-extend-template="/layouts/layout.html"> 
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show="image">
+            </div>
+              <form novalidate role="form" name="imageListForm" class="form-horizontal" ng-init="getImage()" >
+                <fieldset>
+                  <div clas="form-group">
+                    <label for="inputimage" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Images</h2>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/>
+                  <div ng-controller="ImageInfoCtrl">               
+                    <!-- Display the image -->
+                    <table>
+                      <tr>
+                        <th>Image Preview | </th> 
+                        <th> Image Name</th>
+                      </tr>
+                      <tr data-ng-repeat="image in imageData">
+                        <td><img ng-src="assets/{{image.file_file_name}}" ng-style="{'width':'50px','height':'50px'}"></td>
+                        <td><img ng-src="images/{{image.id}}/{{image.file_file_name}}" ng-style="{'width':'50px','height':'50px'}"></td>
+                        <td>{{image.file_file_name}}</td> 
+                        <td>
+                          <a href="#/imageUpdate/{{image.id}}" data-ng-click="update()">Update</a>
+                          <!--<a href="" confirmed-click="deleteProduct(p.id)" ng-confirm-click="Are you sure?">Delete</a> | 
+                          <a href="#/productShow/{{p.id}}" data-ng-click="getDataById(p.id)">Show</a>-->
+                        </td>
+                      </tr>
+                    </table><br/>
+                    <a href="#/imageInfo">Add new Image</a>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

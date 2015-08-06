@@ -1,0 +1,32 @@
+<div ng-controller='ProductCtrl'>
+  <nav>
+    <ul ng-init="getCategories()">
+      <label for="inputproduct" class="">Category Name:</label><hr/>
+      <li ng-repeat="c in categories">
+          <input type="button" ng-click="setShowCategory(c.id)" value="{{ c.cname }}" />  
+      </li>
+      <li><input type="button" ng-click="setShowCategory()" value="All" /></li>
+      <div class="form-group">
+        <div class="col-lg-6">
+          <ul ng-init="searchProducts()">
+            <li ng-repeat="p in searchResult | filter:showcategory">{{ p.pname }}</li>
+          </ul> 
+        </div>
+      </div>
+    </ul>
+  </nav>
+</div>
+
+<!--<div ng-controoler="ProductCtrl">
+  <div ng-init="getCategories()">
+    <div ng-repeat="c in categories">
+      <div>Category Name : {{c.cname}}</div> 
+      <hr/>
+      <div ng-init="searchProducts()">
+        <div ng-repeat="p in searchResult"> 
+          <div>product Name : {{p.pname}} </div>
+        </div>
+      </div><br/>
+    </div>
+  </div>
+</div>-->

@@ -1,0 +1,42 @@
+<div data-extend-template="/layouts/layout.html">
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show="image_info">
+            </div>
+            <div>
+              <form novalidate role="form" name="updateImageForm" ng-submit="" class="form-horizontal">
+                <fieldset>
+                  <div clas="form-group">
+                    <labek for="inputimage" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Edit Image</h2>  
+                      <a href="#/imageInfos">Back</a>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/><br/>
+
+                  <div class="form-group">
+                    <label for="inputimage" class="col-lg-2 control-label">Image : </label>
+                    <div class="col-lg-6">
+                      <!--<input type="file" id="fileUpload" ng-model="imageInfo.image" />-->
+                      <input name="image" ng-model="image_info.file" type="file" id="imageInfo" onchange="angular.element(this).scope().setfiles(this)">              
+                      <div class="error">{{imageUpload}}</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-6 col-lg-offset-2">
+                      <input type="submit" class="btn btn-primary" ng-disabled="updateImageForm.$invalid" value="Update" />
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

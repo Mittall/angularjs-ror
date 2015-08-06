@@ -1,0 +1,58 @@
+<body>
+  <script type="text/ng-template" id="paginationControl.html">
+    <div class="pagination text-center" ng-show="paginator.pageCount() > 1">
+    <ul>
+        <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+            <a>
+                <i class="icon-fast-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+            <a>
+                <i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:paginator.lowerLimit():paginator.pageCount() | limitTo : paginator.limitPerPage" ng-class="paginator.page==i && 'active'"> 
+            <a> 
+                <i>{{i+1}}</i> 
+            </a> 
+        </li>
+        <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
+            <a>
+                <i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
+            <a>
+                <i class="icon-fast-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+  </script>
+  <div class="container" ng-controller="TestCrtl">
+      <table class="table table-bordered table-condensed">
+          <thead>
+              <tr>
+                  <td>Value<td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="value in testValues | paginate:rowsPerPage">
+                  <td>{{value}}</td>
+              </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <paginator></paginator>
+              </td>
+            </tr>
+          </tfoot>
+      </table>
+  </div>
+</body>
+
+<style>
+@import url('http://getbootstrap.com/2.3.2/assets/css/bootstrap.css');
+</style>

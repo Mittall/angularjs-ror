@@ -1,0 +1,58 @@
+<div id="includedContent">
+<div data-extend-template="/layouts/layout.html">
+  <div data-block="content">
+    <section class="list">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="text-center info-mesage" ng-show=""></div>
+            <div ng-hide="">
+              <form novalidate role="form" name="categoryListForm" ng-submit="create()" class="form-horizontal">
+                <fieldset>
+                  <date-picker></date-picker>
+                  <div clas="form-group">
+                    <labek for="inputcategory" class=""></label>
+                    <div class="col-lg-6">
+                      <h2>Create category</h2>
+                    </div>  
+                  </div>
+                  <br/><br/><br/><br/><br/>
+
+                  <div class="form-group">
+                    <label for="inputcategory" class="col-lg-2 control-label">Category name: </label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" name="categoryName" ng-model="categoryModel.cname" id="categoryName" placeholder="category Name" ng-pattern="/^[a-zA-Z]/" auto-focus />
+                      <div class="error">{{categoryError}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-6 col-lg-offset-2">
+                      <input type="submit" class="btn btn-primary" ng-disabled="categoryListForm.$invalid" value="Create" />
+                    </div>
+                  </div>
+
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>
+
+<!--<div class="form-group">
+  <label for="inputproduct" class="col-lg-2 control-label">Category name: </label>
+  <div class="col-lg-6">
+    <div ng-controller="CategoryCtrl">
+      <div ng-init="getcategories()">
+        <select ng-model="category" ng-options="c.id as c.cname for c in categories">
+            <option value="">Select Category</option>
+        </select> 
+      </div>
+    </div>
+    <div class="error"></div>
+  </div>
+</div>-->
