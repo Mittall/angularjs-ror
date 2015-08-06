@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 angularjs-ror
 =============
 
@@ -10,3 +11,6 @@ rake db:create
 rake db:migrate
 
 Enjoy!
+=======
+# angularjs-ror
+>>>>>>> 152f966a66bcf21e2933a84fae032476b1aaad2a
